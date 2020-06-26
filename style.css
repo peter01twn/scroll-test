@@ -1,0 +1,30 @@
+.parallax {
+  position: relative;
+}
+
+.banner{
+  position: relative;
+  height: 100vh;
+  background-color: blanchedalmond;
+}
+.banner::before {
+  content: '';
+  display: block;
+  height: 80px;
+  background-color: cornflowerblue;
+}
+.banner::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  height: 80px;
+  width: 100%;
+  background-color: cornflowerblue;
+}
+
+.box {
+  height: 1500px;
+  margin: 0 auto;
+  background-color: azure;
+}
