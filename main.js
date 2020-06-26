@@ -80,8 +80,8 @@ const bannerTop = banner.getBoundingClientRect().top
 const bannerBottom = banner.getBoundingClientRect().bottom
 
 scroll
-  .init('window')
-  .scrollEnd(e => {
+.init('window')
+.scrollEnd(e => {
     const minOffset = 80;
     const viewHeight = window.innerHeight
     const scrollHeight = window.pageYOffset
