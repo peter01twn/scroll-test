@@ -75,6 +75,9 @@ class ScrollAnimation {
 let scrollTop = 0;
 const scroll = new Scroll()
 const scrollAnimation = new ScrollAnimation()
+const banner = document.querySelector('#banner')
+const bannerTop = banner.getBoundingClientRect().top
+const bannerBottom = banner.getBoundingClientRect().bottom
 
 scroll
   .init('window')
@@ -86,23 +89,23 @@ scroll
     if (scrollAnimation.status === 'play') return
     
     if (direction === 'up') {
-      if (scrollHeight < viewHeight - minOffset) {
+      if (scrollHeight < bannerBottom - minOffset) {
         scrollAnimation
-          .init(scrollHeight, 0)
+          .init(scrollHeight, bannerTop)
           .play()
-      } else if(scrollHeight < viewHeight) {
+      } else if(scrollHeight < bannerBottom) {
         scrollAnimation
-          .init(scrollHeight, viewHeight)
+          .init(scrollHeight, bannerBottom)
           .play()
       }
     } else {
       if (scrollHeight < minOffset) {
         scrollAnimation
-          .init(scrollHeight, 0)
+          .init(scrollHeight, bannerTop)
           .play()
-      } else if (scrollHeight < viewHeight) {
+      } else if (scrollHeight < bannerBottom) {
         scrollAnimation
-          .init(scrollHeight, viewHeight)
+          .init(scrollHeight, bannerBottom)
           .play()
       }
     }
