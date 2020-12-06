@@ -13,7 +13,7 @@ class Scroll {
       this.callback(e)
     }, this.timeInterval);
   }
-  
+
   init(el = this.el) {
     if (el === 'window') {
       this.DOMNode = window
@@ -23,7 +23,7 @@ class Scroll {
     this.DOMNode.addEventListener('scroll', this._scrollHandler)
     return this
   }
-  
+
   scrollEnd(callback) {
     this.callback = callback
   }
@@ -49,7 +49,8 @@ class ScrollAnimation {
   }
   play() {
     this.status = 'play'
-    this.timeInterval = setInterval(() => {
+    cancelAnimationFrame(this.timeInterval)
+    this.timeInterval = requestAnimationFrame(() => {
       const next = this.start + this.step
       window.scrollTo(0, next)
       this.start = next
@@ -57,15 +58,18 @@ class ScrollAnimation {
 
       if (this.count >= this.times || this.start === this.end) {
         this.stop()
+      } else {
+        this.play();
       }
 
       console.log(this.timeInterval)
-    } , 1000 / this.fps)
+    })
 
     return this
   }
   stop() {
-    clearInterval(this.timeInterval)
+    console.log('stop')
+    cancelAnimationFrame(this.timeInterval)
     this.status = 'stop'
     this.count = 0
     return this
@@ -80,20 +84,20 @@ const bannerTop = banner.getBoundingClientRect().top
 const bannerBottom = banner.getBoundingClientRect().bottom
 
 scroll
-.init('window')
-.scrollEnd(e => {
+  .init('window')
+  .scrollEnd(e => {
     const minOffset = 80;
     const viewHeight = window.innerHeight
     const scrollHeight = window.pageYOffset
     const direction = scrollTop > scrollHeight ? 'up' : 'down'
     if (scrollAnimation.status === 'play') return
-    
+
     if (direction === 'up') {
       if (scrollHeight < bannerBottom - minOffset) {
         scrollAnimation
           .init(scrollHeight, bannerTop)
           .play()
-      } else if(scrollHeight < bannerBottom) {
+      } else if (scrollHeight < bannerBottom) {
         scrollAnimation
           .init(scrollHeight, bannerBottom)
           .play()
